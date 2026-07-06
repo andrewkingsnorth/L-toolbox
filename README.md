@@ -1,8 +1,8 @@
 # LABDA Toolbox — landing page
 
 The public landing page for the **LABDA Toolbox**: a curated, browsable catalog of the
-code tools, methods and papers built by LABDA Fellows for movement behaviour analysis.
-It's a **signpost** — every card links out to the live repository or DOI, nothing is
+code tools and resources built by LABDA Fellows for movement behaviour analysis.
+It's a **signpost** — every card links out to the live repository or paper, nothing is
 copied or hosted here.
 
 Live site: `https://<org>.github.io/<repo>/`
@@ -11,79 +11,59 @@ Live site: `https://<org>.github.io/<repo>/`
 
 ## Updating the catalog (no coding needed)
 
-All content lives in two spreadsheets. **Edit them and commit — the site updates itself.**
-You do not need to touch `index.html`.
+All content lives in **one file: `tools.csv`**. Edit it and commit — the site updates
+itself. You do not need to touch the page itself.
 
-| File | Holds |
-|------|-------|
-| `tools.csv`  | Code tool cards |
-| `papers.csv` | Paper / guidance cards |
-
-You can edit these in Excel, Google Sheets, or directly in GitHub
-(open the file → pencil icon → **Edit**). To **add** an entry, add a row; to **remove**
+You can edit `tools.csv` in Excel, Google Sheets, or directly in GitHub
+(open the file → pencil icon → **Edit**). To **add** a card, add a row; to **remove**
 one, delete its row.
 
 ### `tools.csv` columns
 
 | Column | Required | Notes |
 |--------|----------|-------|
-| `stage` | ✓ | Pipeline stage number: `1`, `2`, `3`, `6`, `8`, or `9` — decides which section the card appears in |
-| `name` | ✓ | Tool name (card title) |
-| `lang` | | Language shown on the card, e.g. `Python`, `R` |
-| `repo` | ✓ | Link to the repository (the title links here) |
-| `desc` | ✓ | Short description, 1–2 sentences |
-| `contact` | ✓ | Contact person |
-| `problem` | | "Problem it solves" (shown in the detail panel) |
-| `whenToUse` | | "When to use it" |
-| `needs` | | "What you need", e.g. `Python 3.9+, NumPy` |
-| `outputs` | | "Outputs" |
+| `type` | ✓ | `code` or `resource` — decides which section the card appears in (green **Code Tools** or teal **Resources**) |
+| `title` | ✓ | Card title (e.g. the tool name or paper title) |
+| `tagline` | ✓ | Short one-line description shown on the card |
+| `author` | ✓ | Author or contact shown on the card |
+| `description` | ✓ | Longer detail shown in the pop-out panel when a card is clicked |
+| `intendedUser` | | Who it's for. Multiple values separated by `\|`, e.g. `Researchers\|Policy makers` |
+| `tags` | | Free-text keywords. Multiple values separated by `\|`, e.g. `signal-processing\|Python` |
+| `link` | ✓ | Link to the repository or paper (the title and buttons link here) |
 
-### `papers.csv` columns
-
-| Column | Required | Notes |
-|--------|----------|-------|
-| `stage` | ✓ | Pipeline stage number: `1`, `2`, `3`, `6`, `8`, or `9` |
-| `title` | ✓ | Paper / guidance title (card title) |
-| `kind` | | Badge label, e.g. `Protocol`, `Methods review`, `Guidance` |
-| `url` | ✓ | Link to the DOI or resource (the title links here) |
-| `summary` | ✓ | Plain-language summary, 1–2 sentences |
-| `authors` | ✓ | Author(s) shown on the card |
-| `contact` | ✓ | Contact person (shown in the detail panel) |
-| `howToUse` | | "How to use it" |
-| `why` | | "Why it is useful" |
-| `targetUsers` | | Multiple values separated by `\|`, e.g. `Researchers\|Policy makers` |
-| `example` | | "Example use case" |
-| `limitations` | | "Limitations" |
+**How the fields show up**
+- **title**, **tagline** and **author** appear on the card tile.
+- **description**, **intendedUser** and **tags** all appear in the detail panel (tags and
+  intended-user chips also show on the card).
+- **type** = `code` gives the card the green terminal-style header; anything else is
+  treated as a `resource` (teal).
 
 **Tips**
-- The pipeline stages are fixed (`1, 2, 3, 6, 8, 9`). A row whose `stage` doesn't match
-  one of these won't appear.
 - Fields containing commas are wrapped in double quotes — spreadsheet apps do this
   automatically, so just type normally.
-- All content is public (it's shown on the page and served as plain files). Don't put
-  anything you wouldn't publish into the CSVs.
+- `intendedUser` and `tags` are **pipe-separated** (`|`) — each value becomes its own chip.
+- All content is public (it's shown on the page and served as a plain file). Don't put
+  anything you wouldn't publish into the CSV.
 
 ---
 
 ## Publishing with GitHub Pages
 
-1. Put `index.html`, `tools.csv` and `papers.csv` in the repository (root, together).
+1. Put the page file and `tools.csv` in the repository (root, together).
 2. **Settings → Pages → Build and deployment → Source → Deploy from a branch.**
 3. Choose branch `main` and folder `/ (root)`, then **Save**.
 4. After ~1 minute the site is live at `https://<org>.github.io/<repo>/`.
 
-The three files must stay in the same folder — the page loads the two CSVs relative to
-`index.html`.
+The files must stay in the same folder — the page loads `tools.csv` relative to itself.
 
-> **Note:** the site must be viewed over http(s) (GitHub Pages does this). Opening
-> `index.html` directly from your computer will show built-in placeholder data instead
-> of the CSVs, because browsers block reading local files — this does not affect the
-> published site.
+> **Note:** the site must be viewed over http(s) (GitHub Pages does this). Opening the
+> page directly from your computer will show built-in placeholder data instead of the
+> CSV, because browsers block reading local files — this does not affect the published
+> site.
 
 ---
 
 ## Changing the design
 
-`index.html` is a **compiled** file — don't hand-edit it. The design is maintained
-separately and re-exported to `index.html` when it changes. Day-to-day catalog updates
-only ever need the two CSV files above.
+The page is a **compiled** file — don't hand-edit it. The design is maintained separately
+and re-exported when it changes. Day-to-day catalog updates only ever need `tools.csv`.
